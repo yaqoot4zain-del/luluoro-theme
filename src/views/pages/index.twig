@@ -1,0 +1,203 @@
+{% extends "layouts.master" %}
+
+{% block content %}
+<!-- Hero Banner -->
+<section class="relative h-[600px] flex items-center justify-center overflow-hidden">
+  <img 
+    src="https://luluoro.com/cdn/shop/files/LuluOro_Banner_2.png?v=1748896829&width=3840" 
+    alt="LuluOro Jewelry" 
+    class="absolute inset-0 w-full h-full object-cover"
+  >
+  <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+  <div class="relative z-10 text-center text-white">
+    <h1 class="text-5xl font-bold mb-6">{{ store.name }}</h1>
+    <a 
+      href="{{ url('products') }}" 
+      class="inline-block bg-primary text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-opacity-90 transition"
+    >
+      {{ 'shop_now'|trans }}
+    </a>
+  </div>
+</section>
+
+<!-- Collection Banner -->
+<section class="relative h-[400px] flex items-center justify-center overflow-hidden">
+  <img 
+    src="https://luluoro.com/cdn/shop/files/LuluOro_Desert_Island_Collection_Banner.png?v=1749815229&width=3840" 
+    alt="Desert Island Collection" 
+    class="absolute inset-0 w-full h-full object-cover"
+  >
+  <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+  <div class="relative z-10 text-center text-white">
+    <h2 class="text-4xl font-bold mb-4">{{ 'desert_island_collection'|trans }}</h2>
+    <a 
+      href="{{ url('collections') }}" 
+      class="inline-block bg-white text-gray-900 px-8 py-3 rounded-full text-lg font-semibold hover:bg-gray-100 transition"
+    >
+      {{ 'shop_now'|trans }}
+    </a>
+  </div>
+</section>
+
+<!-- LuluOro Bestsellers -->
+<section class="py-16">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-4">{{ 'bestsellers'|trans }}</h2>
+      <a href="{{ url('collections/lo-iconics') }}" class="text-primary hover:underline">{{ 'view_all'|trans }}</a>
+    </div>
+    
+    {% set bestsellers = products.visible().limit(4) %}
+    {% if bestsellers|length > 0 %}
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {% for product in bestsellers %}
+          {% include 'partials.product.card' %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="text-center text-gray-500 py-8">
+        <p>{{ 'no_products_available'|trans }}</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- New Arrivals -->
+<section class="py-16 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-4">{{ 'new_arrivals'|trans }}</h2>
+      <a href="{{ url('collections/may-mini-drops') }}" class="text-primary hover:underline">{{ 'view_all'|trans }}</a>
+    </div>
+    
+    {% set new_products = products.visible().sort('created_at').limit(4) %}
+    {% if new_products|length > 0 %}
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {% for product in new_products %}
+          {% include 'partials.product.card' %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Necklaces Section -->
+<section class="py-16">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-4">{{ 'necklaces'|trans }}</h2>
+      <a href="{{ url('collections/necklaces') }}" class="text-primary hover:underline">{{ 'view_all'|trans }}</a>
+    </div>
+    
+    {% set necklaces = products.visible().inCollection('necklaces').limit(4) %}
+    {% if necklaces|length > 0 %}
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {% for product in necklaces %}
+          {% include 'partials.product.card' %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Rings Section -->
+<section class="py-16 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-4">{{ 'rings'|trans }}</h2>
+      <a href="{{ url('collections/rings') }}" class="text-primary hover:underline">{{ 'view_all'|trans }}</a>
+    </div>
+    
+    {% set rings = products.visible().inCollection('rings').limit(4) %}
+    {% if rings|length > 0 %}
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {% for product in rings %}
+          {% include 'partials.product.card' %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Earrings Section -->
+<section class="py-16">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-4">{{ 'earrings'|trans }}</h2>
+      <a href="{{ url('collections/earrings') }}" class="text-primary hover:underline">{{ 'view_all'|trans }}</a>
+    </div>
+    
+    {% set earrings = products.visible().inCollection('earrings').limit(4) %}
+    {% if earrings|length > 0 %}
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {% for product in earrings %}
+          {% include 'partials.product.card' %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Bracelets Section -->
+<section class="py-16 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-4">{{ 'bracelets'|trans }}</h2>
+      <a href="{{ url('collections/bracelets') }}" class="text-primary hover:underline">{{ 'view_all'|trans }}</a>
+    </div>
+    
+    {% set bracelets = products.visible().inCollection('bracelets').limit(4) %}
+    {% if bracelets|length > 0 %}
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {% for product in bracelets %}
+          {% include 'partials.product.card' %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Shop the Looks Banner -->
+<section class="relative py-16">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold mb-4">{{ 'shop_the_looks'|trans }}</h2>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <a href="{{ url('pages/night-sky-mix-match') }}" class="group">
+        <div class="aspect-square overflow-hidden rounded-lg">
+          <img 
+            src="https://luluoro.com/cdn/shop/files/4W2A4575-min.jpg?v=1748896198&width=3200" 
+            alt="Night Sky Mix & Match" 
+            class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+          >
+        </div>
+        <p class="mt-4 text-center font-medium group-hover:text-primary transition">{{ 'night_sky_mix_match'|trans }}</p>
+      </a>
+      
+      <a href="{{ url('pages/gold-and-malachite-statements') }}" class="group">
+        <div class="aspect-square overflow-hidden rounded-lg">
+          <img 
+            src="https://luluoro.com/cdn/shop/files/IMG_6619_2d85c1ba-4064-4ad7-b360-af8f1d9b65a7.jpg?v=1748895960&width=3200" 
+            alt="Gold and Malachite Statements" 
+            class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+          >
+        </div>
+        <p class="mt-4 text-center font-medium group-hover:text-primary transition">{{ 'gold_malachite_statements'|trans }}</p>
+      </a>
+      
+      <a href="{{ url('pages/meaningful-accents') }}" class="group">
+        <div class="aspect-square overflow-hidden rounded-lg">
+          <img 
+            src="https://luluoro.com/cdn/shop/files/IMG_6350_376b82e9-e4fb-4722-a489-3ddbae1911c8.jpg?v=1748895956&width=3200" 
+            alt="Meaningful Accents" 
+            class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+          >
+        </div>
+        <p class="mt-4 text-center font-medium group-hover:text-primary transition">{{ 'meaningful_accents'|trans }}</p>
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

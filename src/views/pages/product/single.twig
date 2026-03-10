@@ -1,0 +1,80 @@
+{% extends "layouts.master" %}
+
+{% block content %}
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+  <!-- Product Image -->
+  <div class="relative">
+    <img src="{{ product.image }}" alt="{{ product.name }}" class="w-full rounded-lg shadow-md">
+  </div>
+
+  <!-- Product Info -->
+  <div>
+    <h1 class="text-3xl font-bold mb-4">{{ product.name }}</h1>
+    
+    {% if product.is_on_sale %}
+      <div class="flex items-center gap-4 mb-4">
+        <span class="text-gray-500 line-through text-xl">{{ product.regular_price|money }}</span>
+        <span class="text-primary text-3xl font-bold">{{ product.price|money }}</span>
+      </div>
+    {% else %}
+      <p class="text-primary text-3xl font-bold mb-4">{{ product.price|money }}</p>
+    {% endif %}
+
+    <p class="text-gray-600 mb-6">{{ product.description }}</p>
+
+    <!-- Add to Cart -->
+    <div class="flex gap-4 mb-6">
+      <div class="flex items-center border border-gray-300 rounded-lg">
+        <button class="px-4 py-2 hover:bg-gray-100" onclick="updateQuantity(-1)">-</button>
+        <input type="number" id="quantity" value="1" min="1" class="w-16 text-center border-none focus:outline-none">
+        <button class="px-4 py-2 hover:bg-gray-100" onclick="updateQuantity(1)">+</button>
+      </div>
+      
+      <button 
+        class="flex-1 bg-primary text-white px-8 py-3 rounded-lg hover:bg-opacity-90 transition font-semibold"
+        onclick="salla.cart.add({{ product.id }}, document.getElementById('quantity').value);"
+      >
+        {{ 'add_to_cart'|trans }}
+      </button>
+    </div>
+
+    <!-- Product Details -->
+    <div class="border-t pt-6">
+      <h3 class="font-bold mb-3">{{ 'product_details'|trans }}</h3>
+      <ul class="space-y-2 text-gray-600">
+        {% if product.sku %}
+          <li>{{ 'sku'|trans }}: {{ product.sku }}</li>
+        {% endif %}
+        {% if product.category %}
+          <li>{{ 'category'|trans }}: <a href="{{ product.category.url }}" class="text-primary hover:underline">{{ product.category.name }}</a></li>
+        {% endif %}
+        {% if product.brand %}
+          <li>{{ 'brand'|trans }}: <a href="{{ product.brand.url }}" class="text-primary hover:underline">{{ product.brand.name }}</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Related Products -->
+{% set related_products = products.related(product.id).limit(4) %}
+{% if related_products|length > 0 %}
+<section class="py-12">
+  <h2 class="text-2xl font-bold mb-8 text-center">{{ 'related_products'|trans }}</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    {% for related in related_products %}
+      {% include 'partials.product.card' with {product: related} %}
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<script>
+  function updateQuantity(delta) {
+    const input = document.getElementById('quantity');
+    let value = parseInt(input.value) + delta;
+    if (value < 1) value = 1;
+    input.value = value;
+  }
+</script>
+{% endblock %}

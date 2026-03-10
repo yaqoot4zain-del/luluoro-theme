@@ -1,0 +1,194 @@
+{% extends "layouts.master" %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+  {% if search %}
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-800">{{ 'search_results_for'|trans }}: "{{ search }}"</h1>
+      <p class="text-gray-600 mt-2">{{ 'found'|trans }} {{ products.pagination.total }} {{ 'products'|trans }}</p>
+    </div>
+  {% elseif category %}
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-800">{{ category.name }}</h1>
+      {% if category.description %}
+        <p class="text-gray-600 mt-2">{{ category.description }}</p>
+      {% endif %}
+    </div>
+  {% else %}
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-800">{{ 'all_products'|trans }}</h1>
+    </div>
+  {% endif %}
+
+  <div class="flex flex-col lg:flex-row gap-8">
+    <aside class="w-full lg:w-64 flex-shrink-0">
+      <div class="bg-white rounded-lg shadow-md p-6 sticky top-4">
+        <h2 class="text-xl font-bold mb-4">{{ 'filter'|trans }}</h2>
+        
+        <div class="mb-6">
+          <h3 class="font-semibold mb-3">{{ 'categories'|trans }}</h3>
+          <ul class="space-y-2">
+            <li>
+              <a href="{{ link('products') }}" class="text-gray-600 hover:text-primary {% if not category %}text-primary font-semibold{% endif %}">
+                {{ 'all_categories'|trans }}
+              </a>
+            </li>
+            {% for cat in categories %}
+              <li>
+                <a href="{{ cat.url }}" class="text-gray-600 hover:text-primary {% if category and category.id == cat.id %}text-primary font-semibold{% endif %}">
+                  {{ cat.name }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        {% if collections %}
+          <div class="mb-6">
+            <h3 class="font-semibold mb-3">{{ 'collections'|trans }}</h3>
+            <ul class="space-y-2">
+              {% for collection in collections %}
+                <li>
+                  <a href="{{ collection.url }}" class="text-gray-600 hover:text-primary">
+                    {{ collection.name }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+
+        <div class="mb-6">
+          <h3 class="font-semibold mb-3">{{ 'price_range'|trans }}</h3>
+          <form action="" method="get" class="space-y-3">
+            <div class="flex gap-2">
+              <input 
+                type="number" 
+                name="min_price" 
+                placeholder="{{ 'min'|trans }}" 
+                value="{{ request.get('min_price') }}"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-primary"
+              >
+              <input 
+                type="number" 
+                name="max_price" 
+                placeholder="{{ 'max'|trans }}" 
+                value="{{ request.get('max_price') }}"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-primary"
+              >
+            </div>
+            <button type="submit" class="w-full bg-primary text-white py-2 rounded-lg hover:bg-opacity-90 transition">
+              {{ 'apply'|trans }}
+            </button>
+          </form>
+        </div>
+
+        {% if brands %}
+          <div>
+            <h3 class="font-semibold mb-3">{{ 'brands'|trans }}</h3>
+            <ul class="space-y-2">
+              {% for brand in brands %}
+                <li>
+                  <a href="{{ brand.url }}" class="text-gray-600 hover:text-primary">
+                    {{ brand.name }}
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+      </div>
+    </aside>
+
+    <main class="flex-1">
+      <div class="bg-white rounded-lg shadow-md p-4 mb-6">
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p class="text-gray-600">
+            {{ 'showing'|trans }} {{ products.pagination.from }}-{{ products.pagination.to }} {{ 'of'|trans }} {{ products.pagination.total }}
+          </p>
+          
+          <div class="flex items-center gap-4">
+            <label for="sort" class="text-gray-600">{{ 'sort_by'|trans }}:</label>
+            <select 
+              id="sort" 
+              onchange="window.location.href = this.value"
+              class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-primary"
+            >
+              <option value="{{ link('products', {'sort': 'newest'}) }}" {% if request.get('sort') == 'newest' or not request.get('sort') %}selected{% endif %}>
+                {{ 'newest'|trans }}
+              </option>
+              <option value="{{ link('products', {'sort': 'price_asc'}) }}" {% if request.get('sort') == 'price_asc' %}selected{% endif %}>
+                {{ 'price_low_to_high'|trans }}
+              </option>
+              <option value="{{ link('products', {'sort': 'price_desc'}) }}" {% if request.get('sort') == 'price_desc' %}selected{% endif %}>
+                {{ 'price_high_to_low'|trans }}
+              </option>
+              <option value="{{ link('products', {'sort': 'popularity'}) }}" {% if request.get('sort') == 'popularity' %}selected{% endif %}>
+                {{ 'popularity'|trans }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      {% if products and products.items|length > 0 %}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {% for product in products.items %}
+            <div class="group">
+              {% include 'partials.product.card' with {product: product} %}
+            </div>
+          {% endfor %}
+        </div>
+
+        {% if products.pagination.hasPages %}
+          <div class="mt-12 flex justify-center">
+            <nav class="flex items-center gap-2">
+              {% if products.pagination.hasPrev %}
+                <a 
+                  href="{{ products.pagination.prevUrl }}" 
+                  class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition"
+                >
+                  {{ 'previous'|trans }}
+                </a>
+              {% endif %}
+
+              {% for page in products.pagination.pages %}
+                {% if page.url %}
+                  <a 
+                    href="{{ page.url }}" 
+                    class="px-4 py-2 border rounded-lg transition {% if page.isActive %}bg-primary text-white border-primary{% else %}border-gray-300 hover:bg-gray-50{% endif %}"
+                  >
+                    {{ page.num }}
+                  </a>
+                {% else %}
+                  <span class="px-4 py-2">...</span>
+                {% endif %}
+              {% endfor %}
+
+              {% if products.pagination.hasNext %}
+                <a 
+                  href="{{ products.pagination.nextUrl }}" 
+                  class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition"
+                >
+                  {{ 'next'|trans }}
+                </a>
+              {% endif %}
+            </nav>
+          </div>
+        {% endif %}
+      {% else %}
+        <div class="bg-white rounded-lg shadow-md p-12 text-center">
+          <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
+          </svg>
+          <h2 class="text-2xl font-bold text-gray-800 mb-2">{{ 'no_products_found'|trans }}</h2>
+          <p class="text-gray-600 mb-6">{{ 'try_different_filters'|trans }}</p>
+          <a href="{{ link('products') }}" class="inline-block bg-primary text-white px-6 py-3 rounded-lg hover:bg-opacity-90 transition">
+            {{ 'view_all_products'|trans }}
+          </a>
+        </div>
+      {% endif %}
+    </main>
+  </div>
+</div>
+{% endblock %}

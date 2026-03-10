@@ -1,0 +1,18 @@
+{
+  "name": "luluoro",
+  "display_name": "لولورو",
+  "description": "Luxury Arabic-inspired jewelry theme for Salla",
+  "version": "1.0.0",
+  "language": "ar,en",
+  "author": {
+    "name": "Luluoro Team",
+    "email": "support@luluoro.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/luluoro/luluoro-theme"
+  },
+  "screenshots": {
+    "thumbnail": "thumbnail.png"
+  }
+}

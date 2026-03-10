@@ -1,0 +1,104 @@
+<div class="group relative bg-white rounded-lg overflow-hidden hover:shadow-xl transition-all duration-300">
+  <a href="{{ product.url }}">
+    <div class="relative overflow-hidden aspect-square">
+      <!-- Main Image -->
+      <img 
+        src="{{ product.image }}" 
+        alt="{{ product.name }}" 
+        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+      >
+      
+      <!-- Secondary Image (on hover) -->
+      {% if product.images[1] %}
+        <img 
+          src="{{ product.images[1] }}" 
+          alt="{{ product.name }}" 
+          class="w-full h-full object-cover absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        >
+      {% endif %}
+      
+      <!-- Badges -->
+      {% if product.is_on_sale %}
+        <span class="absolute top-3 right-3 bg-red-500 text-white px-3 py-1 text-xs font-semibold rounded-full">
+          {{ 'sale'|trans }}
+        </span>
+      {% endif %}
+      {% if product.is_new %}
+        <span class="absolute top-3 left-3 bg-primary text-white px-3 py-1 text-xs font-semibold rounded-full">
+          {{ 'new'|trans }}
+        </span>
+      {% endif %}
+      {% if product.is_out_of_stock %}
+        <span class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <span class="bg-white text-gray-800 px-4 py-2 font-semibold rounded">
+            {{ 'sold_out'|trans }}
+          </span>
+        </span>
+      {% endif %}
+      
+      <!-- Quick Add Button (visible on hover) -->
+      {% if not product.is_out_of_stock %}
+        <div class="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
+          <button 
+            class="w-full bg-white text-primary py-3 rounded-lg font-semibold hover:bg-primary hover:text-white transition-colors duration-300 shadow-lg"
+            onclick="salla.cart.add({{ product.id }}); event.preventDefault(); event.stopPropagation();"
+          >
+            {{ 'quick_add'|trans }}
+          </button>
+        </div>
+      {% endif %}
+    </div>
+    
+    <div class="p-4">
+      <!-- Vendor -->
+      <p class="text-xs text-gray-500 mb-1">
+        {% if product.vendor %}
+          {{ product.vendor.name }}
+        {% else %}
+          {{ store.name }}
+        {% endif %}
+      </p>
+      
+      <!-- Product Name -->
+      <h3 class="font-semibold text-base mb-2 text-gray-800 line-clamp-2 group-hover:text-primary transition-colors duration-300">
+        {{ product.name }}
+      </h3>
+      
+      <!-- Price -->
+      <div class="flex items-center gap-2">
+        {% if product.is_on_sale %}
+          <span class="text-gray-400 line-through text-sm">
+            {{ product.regular_price|money }}
+          </span>
+        {% endif %}
+        <span class="text-primary font-bold text-lg">
+          {{ product.price|money }}
+        </span>
+      </div>
+      
+      <!-- Color Options (if available) -->
+      {% if product.options.color %}
+        <div class="mt-3 flex items-center gap-2">
+          {% for color in product.options.color %}
+            <span 
+              class="w-4 h-4 rounded-full border border-gray-300 cursor-pointer hover:scale-110 transition-transform"
+              style="background-color: {{ color.value }}"
+              title="{{ color.label }}"
+            ></span>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </a>
+  
+  <!-- Wishlist Button -->
+  <button 
+    class="absolute top-3 right-3 bg-white rounded-full p-2 shadow-md opacity-0 group-hover:opacity-100 transition-all duration-300 hover:text-red-500 z-10"
+    onclick="salla.wishlist.add({{ product.id }}); event.preventDefault(); event.stopPropagation();"
+    title="{{ 'add_to_wishlist'|trans }}"
+  >
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+    </svg>
+  </button>
+</div>

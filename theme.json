@@ -1,0 +1,30 @@
+{
+"name": "luluoro",
+  "display_name": "Luluoro",
+  "description": "Luxury Arabic-inspired jewelry theme for Salla",
+  "language": "ar,en",
+  "version": "1.0.0",
+  "author": {
+    "name": "Luluoro Team",
+    "email": "support@luluoro.com"
+  },
+  "features": [
+    "youtube",
+    "fixed-banner",
+    "testimonials",
+    "parallax-background",
+    "photos-slider",
+    "store-features",
+    "squared-photos",
+    "fixed-products",
+    "products-slider",
+    "featured-products-style-1",
+    "featured-products-style-2",
+    "featured-products-style-3",
+    "latest-products",
+    "vertical-menu-slider"
+  ],
+  "screenshots": {
+    "thumbnail": "thumbnail.png"
+  }
+}

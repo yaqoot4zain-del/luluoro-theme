@@ -1,0 +1,106 @@
+{# Footer Component #}
+<footer class="bg-secondary text-white pt-16 pb-8">
+  <div class="container mx-auto px-4">
+    <!-- Newsletter Section -->
+    <div class="mb-12 text-center">
+      <h3 class="text-2xl font-bold mb-4">{{ 'insiders_club'|trans }}</h3>
+      <p class="text-gray-300 mb-6 max-w-xl mx-auto">{{ 'newsletter_text'|trans }}</p>
+      <form action="{{ url('newsletter/subscribe') }}" method="post" class="max-w-md mx-auto flex gap-2">
+        <input 
+          type="email" 
+          name="email" 
+          placeholder="{{ 'email_placeholder'|trans }}"
+          required
+          class="flex-1 px-4 py-3 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary"
+        >
+        <button 
+          type="submit" 
+          class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-opacity-90 transition font-semibold"
+        >
+          {{ 'subscribe'|trans }}
+        </button>
+      </form>
+    </div>
+
+    <!-- Main Footer Links -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <!-- About -->
+      <div>
+        <h4 class="font-bold mb-4 text-lg">{{ 'about'|trans }}</h4>
+        <ul class="space-y-2">
+          <li><a href="{{ url('pages/find-us-at') }}" class="text-gray-300 hover:text-primary transition">{{ 'find_us_at'|trans }}</a></li>
+          <li><a href="{{ url('policies/shipping-policy') }}" class="text-gray-300 hover:text-primary transition">{{ 'shipping_policy'|trans }}</a></li>
+          <li><a href="{{ url('policies/privacy-policy') }}" class="text-gray-300 hover:text-primary transition">{{ 'privacy_policy'|trans }}</a></li>
+          <li><a href="{{ url('policies/terms-of-service') }}" class="text-gray-300 hover:text-primary transition">{{ 'terms_of_service'|trans }}</a></li>
+        </ul>
+      </div>
+
+      <!-- Customer Service -->
+      <div>
+        <h4 class="font-bold mb-4 text-lg">{{ 'customer_service'|trans }}</h4>
+        <ul class="space-y-2">
+          <li><a href="{{ url('pages/contact') }}" class="text-gray-300 hover:text-primary transition">{{ 'contact'|trans }}</a></li>
+          <li><a href="{{ url('pages/ring-size-guide') }}" class="text-gray-300 hover:text-primary transition">{{ 'ring_size_guide'|trans }}</a></li>
+          <li><a href="{{ url('policies/refund-policy') }}" class="text-gray-300 hover:text-primary transition">{{ 'returns_exchanges'|trans }}</a></li>
+          <li><a href="{{ url('pages/faqs') }}" class="text-gray-300 hover:text-primary transition">{{ 'faqs'|trans }}</a></li>
+        </ul>
+      </div>
+
+      <!-- Partner With Us -->
+      <div>
+        <h4 class="font-bold mb-4 text-lg">{{ 'partner_with_us'|trans }}</h4>
+        <ul class="space-y-2">
+          <li><a href="{{ url('pages/collab') }}" class="text-gray-300 hover:text-primary transition">{{ 'ambassadors'|trans }}</a></li>
+          <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdA-lA3r1WRknfUSzry4_EPGMQ9-_ShOWSH5zK2jY5WVWBjnA/viewform" target="_blank" class="text-gray-300 hover:text-primary transition">{{ 'retailers'|trans }}</a></li>
+          <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdweSAUvkdnLRK95kwDbEVpmQiP7tAySE5DBdRM8RuOOWsl5Q/viewform" target="_blank" class="text-gray-300 hover:text-primary transition">{{ 'wholesale_inquiries'|trans }}</a></li>
+          <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSc9xvt4DNfQWMdOvsIfGt8r72WhSrs0kkpNxB4yDl8ozNP1Yg/viewform" target="_blank" class="text-gray-300 hover:text-primary transition">{{ 'affiliates'|trans }}</a></li>
+        </ul>
+      </div>
+
+      <!-- Categories -->
+      <div>
+        <h4 class="font-bold mb-4 text-lg">{{ 'categories'|trans }}</h4>
+        <ul class="space-y-2">
+          <li><a href="{{ url('collections/desert-island') }}" class="text-gray-300 hover:text-primary transition">{{ 'desert_island'|trans }}</a></li>
+          <li><a href="{{ url('collections/desert-island-part-two') }}" class="text-gray-300 hover:text-primary transition">{{ 'desert_island_2'|trans }}</a></li>
+          <li><a href="{{ url('collections/lo-iconics') }}" class="text-gray-300 hover:text-primary transition">{{ 'luluoro_iconics'|trans }}</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Social Icons -->
+    <div class="flex justify-center gap-6 mb-8">
+      <a href="https://instagram.com/lulu.oro" target="_blank" class="text-gray-300 hover:text-primary transition">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </a>
+      <a href="https://tiktok.com/@luluorojewelry" target="_blank" class="text-gray-300 hover:text-primary transition">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+      </a>
+      <a href="https://snapchat.com/add/luluoro_lo" target="_blank" class="text-gray-300 hover:text-primary transition">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.206.793c.99 0 5.877.385 7.186 2.634.523.901.76 1.985.76 3.213 0 .613-.083 1.21-.234 1.785-.32 1.226-.972 2.351-1.916 3.301-.737.744-1.611 1.286-2.578 1.594.625.18 1.185.467 1.662.846.717.571 1.19 1.354 1.328 2.202.06.36.03.726-.09 1.085-.18.54-.525 1.033-.999 1.436-.395.336-.868.576-1.39.707-.33.083-.67.125-1.015.125-.405 0-.81-.06-1.2-.18-.96-.298-1.755-.877-2.304-1.643-.405-.565-.66-1.225-.752-1.936-.03-.255-.02-.514.03-.77.12-.765.42-1.485.87-2.115-1.155-1.035-1.755-2.34-1.755-3.795 0-1.065.315-2.06.88-2.876.6-.866 1.47-1.522 2.53-1.904-.195-.6-.29-1.235-.29-1.89 0-1.305.45-2.509 1.22-3.49.255-.328.555-.62.885-.885z"/></svg>
+      </a>
+    </div>
+
+    <!-- Country/Language Selector -->
+    <div class="flex justify-center gap-4 mb-8 text-sm text-gray-400">
+      <div class="flex items-center gap-2">
+        <span>{{ 'country'|trans }}:</span>
+        <select class="bg-transparent border-none text-gray-300 focus:outline-none cursor-pointer">
+          <option value="SA" selected>Saudi Arabia | SAR</option>
+          <option value="BH">Bahrain | BHD</option>
+          <option value="AE">United Arab Emirates | AED</option>
+          <option value="KW">Kuwait | KWD</option>
+          <option value="QA">Qatar | QAR</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="border-t border-gray-700 pt-8 text-center text-gray-400">
+      <p>&copy; {{ "now"|date("Y") }} {{ store.name }}. {{ 'all_rights_reserved'|trans }}</p>
+      <p class="mt-2 text-sm">
+        <a href="https://sbmc.bh" target="_blank" class="hover:text-primary transition">{{ 'developed_by'|trans }}</a>
+      </p>
+    </div>
+  </div>
+</footer>
